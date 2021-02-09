@@ -1,12 +1,15 @@
 package src;
 
-import java.awt.*;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 
 public class Life {
 	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			buildFrame();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				buildFrame();
+			}
 		});
 	}
 
@@ -14,7 +17,7 @@ public class Life {
 		JFrame frame = new JFrame("The Flower Game");
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(Constants.BOARD.width, Constants.BOARD.height));
+		frame.setPreferredSize(Constants.BOARD);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
 		frame.add(new Panel());

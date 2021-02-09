@@ -60,4 +60,15 @@ public final class Constants {
 	}
 
 	private Constants() {}
+
+	public static void displayConstants() {
+		System.out.println(BOARD.width);
+		System.out.println(BOARD.height);
+		System.out.println(CELL_SIZE);
+		System.out.println(DELAY);
+		System.out.println(ROWS);
+		System.out.println(COLS);
+		System.out.println(BIAS);
+		System.out.println(GRID);
+	}
 }
