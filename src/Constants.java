@@ -22,9 +22,9 @@ public final class Constants {
 
 	static {
 		Properties props = new Properties();
-		Path path = Paths.get("./life.properties");
+		Path path = Paths.get("../life.properties");
 		String[] keys     = {"board_width", "board_height", "cell_size", "delay", "bias", "grid"};
-		String[] defaults = {"1920", "1080", "20", "20", "0.75", "1"};
+		String[] defaults = {"1920", "1080", "20", "50", "0.25", "1"};
 
 		try {
 			if (!Files.exists(path)) {
