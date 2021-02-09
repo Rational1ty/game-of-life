@@ -7,8 +7,7 @@ import java.util.Arrays;
 
 public class Board {
 	public static final int RANDOM = 1;
-	public static final int LINES  = 2;
-	public static final int EMPTY  = 3;
+	public static final int LINED  = 2;
 
 	protected final boolean[][] cells = new boolean[ROWS][COLS];
 	private final boolean[][] next = new boolean[ROWS][COLS];
@@ -22,15 +21,12 @@ public class Board {
 					}
 				}
 				break;
-			case LINES:
+			case LINED:
 				for (int r = 0; r < ROWS; r++) {
 					for (int c = 0; c < COLS; c++) {
 						cells[r][c] = (r % 2 == 0);
 					}
 				}
-				break;
-			case EMPTY:
-				// Don't need to do anything since all cells are already false
 				break;
 		}
 	}

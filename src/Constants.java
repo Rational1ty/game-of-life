@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Constants {
 	public static final Dimension BOARD;
@@ -17,24 +18,24 @@ public final class Constants {
 	public static final int DELAY;
 	public static final int ROWS;
 	public static final int COLS;
+	public static final int INITIAL_CONFIG;
 	public static final double BIAS;
 	public static final boolean GRID;
 
 	static {
 		Properties props = new Properties();
 		Path path = Paths.get("../life.properties");
-		String[] keys     = {"board_width", "board_height", "cell_size", "delay", "bias", "grid"};
-		String[] defaults = {"1920", "1080", "20", "50", "0.25", "1"};
+		String[] keys     = {"board_width", "board_height", "cell_size", "delay", "initial_config", "bias", "grid"};
+		String[] defaults = {"1920", "1080", "20", "50", "random", "0.25", "1"};
 
 		try {
 			if (!Files.exists(path)) {
-                // Pair each key with its default value, formatted and separated by a colon
-                var lines = new ArrayList<String>(keys.length);
-                for (int i = 0; i < keys.length; i++) {
-                    lines.add(String.format("%-14s %s", keys[i] + ":", defaults[i]));
-                }
+				// map each key to its default value, separated by a colon and with correct spacing
+				var lines = IntStream.range(0, keys.length)
+					.mapToObj(i -> String.format("%-16s %s", keys[i] + ":", defaults[i]))
+					.collect(Collectors.toList());
 
-                // Create life.properties in root directory and write default k:v pairs
+				// create life.properties in root directory and write default entries
                 Files.createFile(path);
                 Files.write(path, lines);
             }
@@ -55,20 +56,12 @@ public final class Constants {
 		BIAS = parseDouble(props.getProperty("bias"));
 		GRID = parseInt(props.getProperty("board_width")) > 0;
 
+		INITIAL_CONFIG = props.getProperty("initial_config")
+			.equals("lined") ? Board.LINED : Board.RANDOM;
+
 		ROWS = BOARD.height / CELL_SIZE;
 		COLS = BOARD.width / CELL_SIZE;
 	}
 
 	private Constants() {}
-
-	public static void displayConstants() {
-		System.out.println(BOARD.width);
-		System.out.println(BOARD.height);
-		System.out.println(CELL_SIZE);
-		System.out.println(DELAY);
-		System.out.println(ROWS);
-		System.out.println(COLS);
-		System.out.println(BIAS);
-		System.out.println(GRID);
-	}
 }

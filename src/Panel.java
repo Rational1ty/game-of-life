@@ -39,7 +39,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 		setBackground(BG_COLOR);
 		setFocusable(true);
 
-		board = new Board(Board.EMPTY);
+		board = new Board(Constants.INITIAL_CONFIG);
 		timer = new Timer(Constants.DELAY, this);
 
 		timer.start();
