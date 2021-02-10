@@ -22,8 +22,9 @@ public final class Constants {
 	public static final double BIAS;
 	public static final boolean GRID;
 
+	public static final Properties props = new Properties();
+
 	static {
-		Properties props = new Properties();
 		Path path = Paths.get("../life.properties");
 		String[] keys     = {"board_width", "board_height", "cell_size", "delay", "initial_config", "bias", "grid"};
 		String[] defaults = {"1920", "1080", "20", "50", "random", "0.25", "1"};
@@ -54,7 +55,7 @@ public final class Constants {
 		DELAY     = parseInt(props.getProperty("delay"));
 
 		BIAS = parseDouble(props.getProperty("bias"));
-		GRID = parseInt(props.getProperty("board_width")) > 0;
+		GRID = parseInt(props.getProperty("grid")) > 0;
 
 		INITIAL_CONFIG = props.getProperty("initial_config")
 			.equals("lined") ? Board.LINED : Board.RANDOM;
@@ -64,4 +65,8 @@ public final class Constants {
 	}
 
 	private Constants() {}
+
+	public static String get(String key) {
+		return props.getProperty(key);
+	}
 }
