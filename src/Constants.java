@@ -18,10 +18,15 @@ public final class Constants {
 	public static final int ROWS;
 	public static final int COLS;
 	public static final int INITIAL_CONFIG;
+	public static final int OUTPUT_ENV;
 	public static final double BIAS;
 	public static final boolean GRID;
 
-	public static final Properties props = new Properties();
+	// values for OUTPUT_ENV
+	public static final int ENV_WINDOW  = 1;
+	public static final int ENV_CONSOLE = 2;
+
+	private static final Properties props = new Properties();
 
 	static {
 		Path path = Paths.get("../life.properties");
@@ -33,6 +38,7 @@ public final class Constants {
 			"bias:            0.25",
 			"grid:            1",
 			"initial_config:  random",
+			"output_env:      window",
 			"bg_color:        0x000000",
 			"fg_color:        0xC7C7C7",
 			"grid_color:      0x0F0F0F"
@@ -61,12 +67,16 @@ public final class Constants {
 		BIAS = parseDouble(get("bias"));
 		GRID = parseInt(get("grid")) > 0;
 
-		INITIAL_CONFIG = switch(get("initial_config")) {
+		INITIAL_CONFIG = switch (get("initial_config")) {
 			case "blank"  -> Board.BLANK;
-			case "random" -> Board.RANDOM;
 			case "lined"  -> Board.LINED;
 			case "center" -> Board.CENTER;
 			default -> Board.RANDOM;
+		};
+		
+		OUTPUT_ENV = switch (get("output_env")) {
+			case "console", "terminal" -> ENV_CONSOLE;
+			default -> ENV_WINDOW;
 		};
 
 		ROWS = BOARD.height / CELL_SIZE;

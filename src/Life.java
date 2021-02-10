@@ -1,6 +1,8 @@
 package src;
 
 import static src.Constants.BOARD;
+import static src.Constants.ENV_CONSOLE;
+import static src.Constants.OUTPUT_ENV;
 
 import java.awt.EventQueue;
 import java.io.File;
@@ -10,9 +12,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Life {
+	private static final ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls").inheritIO();
+
 	public static void main(String[] args) throws ClassNotFoundException {
-		Class.forName("src.Constants");				// load Constants class first
-		EventQueue.invokeLater(Life::buildFrame);	// run program on event queue (separate thread)
+		// load Constants class first
+		Class.forName("src.Constants");
+		// run program on event queue (separate thread)
+		EventQueue.invokeLater(OUTPUT_ENV == ENV_CONSOLE ? Life::startConsole : Life::buildFrame);
 	}
 
 	private static void buildFrame() {
@@ -33,5 +39,18 @@ public class Life {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
+	}
+
+	private static void startConsole() {
+		cls();
+	}
+
+	private static void cls() {
+		try {
+			pb.start().waitFor();
+		} catch (IOException | InterruptedException ex) {
+			System.err.println("Error occurred during terminal interface");
+			System.exit(0);
+		}
 	}
 }
