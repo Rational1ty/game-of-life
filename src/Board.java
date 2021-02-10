@@ -6,8 +6,10 @@ import static src.Constants.ROWS;
 import java.util.Arrays;
 
 public class Board {
+	public static final int BLANK  = 0;
 	public static final int RANDOM = 1;
 	public static final int LINED  = 2;
+	public static final int CENTER = 3;
 
 	protected final boolean[][] cells = new boolean[ROWS][COLS];
 	private final boolean[][] next = new boolean[ROWS][COLS];
@@ -27,6 +29,9 @@ public class Board {
 						cells[r][c] = (r % 2 == 0);
 					}
 				}
+				break;
+			case CENTER:
+				cells[ROWS / 2][COLS / 2] = true;
 				break;
 		}
 	}

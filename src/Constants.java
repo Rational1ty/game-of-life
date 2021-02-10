@@ -51,18 +51,23 @@ public final class Constants {
 		}
 
 		BOARD = new Dimension(
-			parseInt(props.getProperty("board_width")),
-			parseInt(props.getProperty("board_height"))
+			parseInt(get("board_width")),
+			parseInt(get("board_height"))
 		);
 
-		CELL_SIZE = parseInt(props.getProperty("cell_size"));
-		DELAY     = parseInt(props.getProperty("delay"));
+		CELL_SIZE = parseInt(get("cell_size"));
+		DELAY     = parseInt(get("delay"));
 
-		BIAS = parseDouble(props.getProperty("bias"));
-		GRID = parseInt(props.getProperty("grid")) > 0;
+		BIAS = parseDouble(get("bias"));
+		GRID = parseInt(get("grid")) > 0;
 
-		INITIAL_CONFIG = props.getProperty("initial_config")
-			.equals("lined") ? Board.LINED : Board.RANDOM;
+		INITIAL_CONFIG = switch(get("initial_config")) {
+			case "blank"  -> Board.BLANK;
+			case "random" -> Board.RANDOM;
+			case "lined"  -> Board.LINED;
+			case "center" -> Board.CENTER;
+			default -> Board.RANDOM;
+		};
 
 		ROWS = BOARD.height / CELL_SIZE;
 		COLS = BOARD.width / CELL_SIZE;
