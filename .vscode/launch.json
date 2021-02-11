@@ -6,13 +6,6 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "Launch",
-			"request": "launch",
-			"mainClass": "src.Life",
-			"console": "externalTerminal"
-		},
-		{
-			"type": "java",
 			"name": "Debug - Current file",
 			"request": "launch",
 			"mainClass": "${file}",

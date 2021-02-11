@@ -11,8 +11,10 @@ import javax.swing.JFrame;
 
 public class Life {
 	public static void main(String[] args) throws ClassNotFoundException {
-		Class.forName("src.Constants");				// load Constants class first
-		EventQueue.invokeLater(Life::buildFrame);	// run program on event queue (separate thread)
+		// load Constants class first
+		Class.forName("src.Constants");
+		// run program on event queue (separate thread)
+		EventQueue.invokeLater(Constants.WINDOW ? Life::buildFrame : Life::startConsole);
 	}
 
 	private static void buildFrame() {
@@ -33,5 +35,9 @@ public class Life {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
+	}
+
+	private static void startConsole() {
+		new ConsoleDisplayHandler();
 	}
 }
