@@ -12,33 +12,31 @@ import java.util.List;
 import java.util.Properties;
 
 public final class Constants {
+	public static final boolean WINDOW;
 	public static final Dimension BOARD;
 	public static final int CELL_SIZE;
-	public static final int DELAY;
 	public static final int ROWS;
 	public static final int COLS;
+	public static final int DELAY;
 	public static final int INITIAL_CONFIG;
-	public static final int OUTPUT_ENV;
 	public static final double BIAS;
 	public static final boolean GRID;
-
-	// values for OUTPUT_ENV
-	public static final int ENV_WINDOW  = 1;
-	public static final int ENV_CONSOLE = 2;
+	public static final char CELL_CHAR;
 
 	private static final Properties props = new Properties();
 
 	static {
 		Path path = Paths.get("../life.properties");
 		List<String> lines = List.of(
+			"window:          1",
 			"board_width:     1920",
 			"board_height:    1080",
 			"cell_size:       10",
+			"cell_char:       #",
 			"delay:           50",
 			"bias:            0.25",
 			"grid:            1",
 			"initial_config:  random",
-			"output_env:      window",
 			"bg_color:        0x000000",
 			"fg_color:        0xC7C7C7",
 			"grid_color:      0x0F0F0F"
@@ -55,6 +53,8 @@ public final class Constants {
 			System.err.println("Error while accessing file \"life.properties\".");
             System.exit(0);
 		}
+
+		WINDOW = parseInt(get("window")) > 0;
 
 		BOARD = new Dimension(
 			parseInt(get("board_width")),
@@ -73,14 +73,12 @@ public final class Constants {
 			case "center" -> Board.CENTER;
 			default -> Board.RANDOM;
 		};
-		
-		OUTPUT_ENV = switch (get("output_env")) {
-			case "console", "terminal" -> ENV_CONSOLE;
-			default -> ENV_WINDOW;
-		};
 
-		ROWS = BOARD.height / CELL_SIZE;
-		COLS = BOARD.width / CELL_SIZE;
+		CELL_CHAR = get("cell_char").charAt(0);
+
+		// if window is on, calculate rows and cols; otherwise, use clamped board dimensions
+		ROWS = WINDOW ? BOARD.height / CELL_SIZE : Math.min(BOARD.height, 66);
+		COLS = WINDOW ? BOARD.width / CELL_SIZE  : Math.min(BOARD.width, 237);
 	}
 
 	private Constants() {}
