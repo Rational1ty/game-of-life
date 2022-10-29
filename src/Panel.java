@@ -57,8 +57,10 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 		g2d.setColor(FG_COLOR);
 		for (int r = 0; r < ROWS; r++) {
 			int y = r * CELL_SIZE;
+
 			for (int c = 0; c < COLS; c++) {
 				int x = c * CELL_SIZE;
+
 				if (board.cells[r][c]) {
 					g2d.fillRect(x, y, CELL_SIZE, CELL_SIZE);
 				}
@@ -68,6 +70,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 		if (Constants.GRID) {
 			// draw grid
 			g2d.setColor(GRID_COLOR);
+
 			for (int x = 0; x < BOARD.width; x += CELL_SIZE) {
 				g2d.drawLine(x, 0, x, BOARD.height);
 			}

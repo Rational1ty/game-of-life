@@ -29,7 +29,7 @@ public class Life {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(BOARD);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setUndecorated(BOARD.width == 1920 && BOARD.height == 1080);
+		frame.setUndecorated(true);
 		frame.add(new Panel());
 		frame.pack();
 		frame.setLocationRelativeTo(null);

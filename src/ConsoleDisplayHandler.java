@@ -49,6 +49,7 @@ public class ConsoleDisplayHandler implements ActionListener {
 			for (int c = 0; c < COLS; c++) {
 				os.write(board.cells[r][c] ? Constants.CELL_CHAR : ' ');
 			}
+
 			if (r < ROWS - 1) {
 				os.flush();
 				System.out.println();
