@@ -71,6 +71,7 @@ public final class Constants {
 			case "blank"  -> Board.BLANK;
 			case "lined"  -> Board.LINED;
 			case "center" -> Board.CENTER;
+			case "border" -> Board.BORDER;
 			default -> Board.RANDOM;
 		};
 

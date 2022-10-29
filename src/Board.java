@@ -10,6 +10,7 @@ public class Board {
 	public static final int RANDOM = 1;
 	public static final int LINED  = 2;
 	public static final int CENTER = 3;
+	public static final int BORDER = 4;
 
 	protected final boolean[][] cells = new boolean[ROWS][COLS];
 	private final boolean[][] next = new boolean[ROWS][COLS];
@@ -32,6 +33,16 @@ public class Board {
 				break;
 			case CENTER:
 				cells[ROWS / 2][COLS / 2] = true;
+				break;
+			case BORDER:
+				for (int r = 0; r < ROWS; r++) {
+					cells[r][0] = true;
+					cells[r][COLS - 1] = true;
+				}
+				for (int c = 0; c < COLS; c++) {
+					cells[0][c] = true;
+					cells[ROWS - 1][c] = true;
+				}
 				break;
 		}
 	}
