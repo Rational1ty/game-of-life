@@ -2,7 +2,8 @@ package src;
 
 import static src.Constants.COLS;
 import static src.Constants.ROWS;
-import static src.Constants.get;
+import static src.Constants.BG;
+import static src.Constants.FG;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +19,6 @@ public class ConsoleDisplayHandler implements ActionListener {
 	private BufferedOutputStream os;
 	private ProcessBuilder pb;
 	private ProcessBuilder cls;
-
-	protected final String FG = get("fg_color");
-	protected final String BG = get("bg_color");
 
 	public ConsoleDisplayHandler() {
 		board = new Board(Constants.INITIAL_CONFIG);

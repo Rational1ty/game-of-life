@@ -26,6 +26,7 @@ The `life.properties` file contains settings that control the behavior of the ga
 created for you, with the default options, the first time the program is launched.
 
 Some properties have extra limitations or are disabled when `window=0` (console mode):
+- Currently, the only supported terminal is Windows Command Prompt (`cmd`).
 - `board_width` and `board_height` are limited to the dimensions of the console
   - Maximum console dimensions are typically around 240&times;70
 - `cell_size`, `grid`, and `grid_color` have no effect
@@ -36,17 +37,20 @@ Similarly, some properties have different effects when `window=1` (window mode):
 
 Here is a list of all properties, along with their types, default values, and descriptions:
 
-| Property       | Type   | Default  | Description                                                                   |
-|----------------|--------|----------|-------------------------------------------------------------------------------|
-| window         | bool   | 1        | If true, game is run in a dedicated window; otherwise, the console is used    |
-| board_width    | int    | 0        | Width of the board in pixels; defaults to screen width if set to `0`          |
-| board_height   | int    | 0        | Height of the board in pixels; defaults to screen height if set to `0`        |
-| cell_size      | int    | 10       | Size (side length) of each cell in pixels                                     |
-| cell_char      | char   | #        | Character used to represent living cells when running in a console            |
-| delay          | int    | 50       | Minimum frame time in milliseconds (lower value means faster animation)       |
-| bias           | float  | 0.25     | If `initial_config=random`, the probability of each cell starting as living   |
-| grid           | bool   | 1        | Whether or not to display gridlines                                           |
-| initial_config | string | random   | Starting configuration; can be `random \| blank \| lined \| center \| border` |
-| bg_color       | hex    | 0x000000 | Background color in `0xRRGGBB` format                                         |
-| fg_color       | hex    | 0xC7C7C7 | Foreground (cell) color in `0xRRGGBB` format                                  |
-| grid_color     | hex    | 0x0F0F0F | Gridline color in `0xRRGGBB` format                                           |
+| Property       | Type   | Default  | Description                                                                 |
+|----------------|--------|----------|-----------------------------------------------------------------------------|
+| window         | bool   | 1        | If true, game is run in a dedicated window; otherwise, the console is used  |
+| board_width    | int    | 0        | Width of the board in pixels; defaults to screen width if set to `0`        |
+| board_height   | int    | 0        | Height of the board in pixels; defaults to screen height if set to `0`      |
+| cell_size      | int    | 10       | Size (side length) of each cell in pixels                                   |
+| cell_char      | char   | #        | Character used to represent living cells when running in a console          |
+| delay          | int    | 50       | Minimum frame time in milliseconds (lower value means faster animation)     |
+| bias           | float  | 0.25     | The probability of each cell starting as living¹                            |
+| grid           | bool   | 1        | Whether or not to display gridlines                                         |
+| initial_config | string | random   | Starting configuration; see values² below                                   |
+| bg_color       | hex    | 0x000000 | Background color in `0xRRGGBB` format                                       |
+| fg_color       | hex    | 0xC7C7C7 | Foreground (cell) color in `0xRRGGBB` format                                |
+| grid_color     | hex    | 0x0F0F0F | Gridline color in `0xRRGGBB` format                                         |
+
+¹Only applies when `initial_config=random`  
+²`initial_config` should be one of these values: `random | center | lined | border | blank`
