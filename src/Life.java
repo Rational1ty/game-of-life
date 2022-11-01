@@ -1,7 +1,5 @@
 package src;
 
-import static src.Constants.BOARD;
-
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +25,10 @@ public class Life {
 		} catch (IOException ex) {}
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(BOARD);
+		frame.setPreferredSize(Constants.BOARD);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
+		// frame.setOpacity(0.5f);		// TODO: opacity option
 		frame.add(new Panel());
 		frame.pack();
 		frame.setLocationRelativeTo(null);

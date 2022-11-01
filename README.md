@@ -39,8 +39,8 @@ Here is a list of all properties, along with their types, default values, and de
 | Property       | Type   | Default  | Description                                                                   |
 |----------------|--------|----------|-------------------------------------------------------------------------------|
 | window         | bool   | 1        | If true, game is run in a dedicated window; otherwise, the console is used    |
-| board_width    | int    | 1920     | Width of the board in pixels                                                  |
-| board_height   | int    | 1080     | Height of the board in pixels                                                 |
+| board_width    | int    | 0        | Width of the board in pixels; defaults to screen width if set to `0`          |
+| board_height   | int    | 0        | Height of the board in pixels; defaults to screen height if set to `0`        |
 | cell_size      | int    | 10       | Size (side length) of each cell in pixels                                     |
 | cell_char      | char   | #        | Character used to represent living cells when running in a console            |
 | delay          | int    | 50       | Minimum frame time in milliseconds (lower value means faster animation)       |

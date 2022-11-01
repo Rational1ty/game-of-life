@@ -1,9 +1,10 @@
 package src;
 
-import static java.lang.Double.parseDouble;
-import static java.lang.Integer.parseInt;
+// import static java.lang.Double.parseDouble;
+// import static java.lang.Integer.parseInt;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 public final class Constants {
+	// life.properties constants
 	public static final boolean WINDOW;
 	public static final Dimension BOARD;
 	public static final int CELL_SIZE;
@@ -23,14 +25,17 @@ public final class Constants {
 	public static final boolean GRID;
 	public static final char CELL_CHAR;
 
-	private static final Properties props = new Properties();
+	// internal constants
+	public static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
+
+	private static final Properties props = new Properties(12);
 
 	static {
 		Path path = Paths.get("../life.properties");
 		List<String> lines = List.of(
 			"window:          1",
-			"board_width:     1920",
-			"board_height:    1080",
+			"board_width:     0",
+			"board_height:    0",
 			"cell_size:       10",
 			"cell_char:       #",
 			"delay:           50",
@@ -45,27 +50,23 @@ public final class Constants {
 		try {
 			if (!Files.exists(path)) {
 				// create life.properties in root directory and write default entries
-                Files.createFile(path);
-                Files.write(path, lines);
-            }
-            props.load(Files.newInputStream(path));
+				Files.createFile(path);
+				Files.write(path, lines);
+			}
+			props.load(Files.newInputStream(path));
 		} catch (IOException ex) {
 			System.err.println("Error while accessing file \"life.properties\".");
-            System.exit(0);
+			System.exit(0);
 		}
 
-		WINDOW = parseInt(get("window")) > 0;
+		WINDOW = parseBool("window");
 
-		BOARD = new Dimension(
-			parseInt(get("board_width")),
-			parseInt(get("board_height"))
-		);
-
-		CELL_SIZE = parseInt(get("cell_size"));
-		DELAY     = parseInt(get("delay"));
-
-		BIAS = parseDouble(get("bias"));
-		GRID = parseInt(get("grid")) > 0;
+		BOARD = getAdjustedBoardDim("board_width", "board_height");
+		
+		CELL_SIZE = parseInt("cell_size");
+		DELAY = parseInt("delay");
+		BIAS = parseDouble("bias");
+		GRID = parseBool("grid");
 
 		INITIAL_CONFIG = switch (get("initial_config")) {
 			case "blank"  -> Board.BLANK;
@@ -86,5 +87,30 @@ public final class Constants {
 
 	public static String get(String key) {
 		return props.getProperty(key);
+	}
+
+	private static boolean parseBool(String key) {
+		return Integer.parseInt(get(key)) > 0;
+	}
+
+	private static int parseInt(String key) {
+		return Integer.parseInt(get(key));
+	}
+
+	private static double parseDouble(String key) {
+		return Double.parseDouble(get(key));
+	}
+
+	private static Dimension getAdjustedBoardDim(String widthKey, String heightKey) {
+		Dimension board = new Dimension(parseInt(widthKey), parseInt(heightKey));
+
+		if (board.width <= 0 || board.width > SCREEN.width) {
+			board.width = SCREEN.width;
+		}
+		if (board.height <= 0 || board.height > SCREEN.height) {
+			board.height = SCREEN.height;
+		}
+		
+		return board;
 	}
 }

@@ -116,8 +116,8 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 		int row = e.getY() / CELL_SIZE;
 		int col = e.getX() / CELL_SIZE;
 
-		if (row >= ROWS || row < 0) return;
-		if (col >= COLS || col < 0) return;
+		if (row < 0 || row >= ROWS) return;
+		if (col < 0 || col >= COLS) return;
 
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			board.cells[row][col] = true;
