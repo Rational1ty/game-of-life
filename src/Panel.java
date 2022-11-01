@@ -4,9 +4,7 @@ import static src.Constants.BOARD;
 import static src.Constants.CELL_SIZE;
 import static src.Constants.COLS;
 import static src.Constants.ROWS;
-import static src.Constants.get;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -25,10 +23,6 @@ import javax.swing.event.MouseInputListener;
 public class Panel extends JPanel implements ActionListener, KeyListener, MouseInputListener {
 	private static final long serialVersionUID = 1L;
 
-	protected final Color BG_COLOR = Color.decode(get("bg_color"));
-	protected final Color FG_COLOR = Color.decode(get("fg_color"));
-	protected final Color GRID_COLOR = Color.decode(get("grid_color"));
-
 	private Timer timer;
 	private Board board;
 	private boolean active = false;
@@ -38,8 +32,8 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
-		setBorder(BorderFactory.createLineBorder(BG_COLOR));
-		setBackground(BG_COLOR);
+		setBorder(BorderFactory.createLineBorder(Constants.BG_COLOR));
+		setBackground(Constants.BG_COLOR);
 		setFocusable(true);
 
 		board = new Board(Constants.INITIAL_CONFIG);
@@ -54,7 +48,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 		Graphics2D g2d = (Graphics2D) g;
 
 		// draw living cells
-		g2d.setColor(FG_COLOR);
+		g2d.setColor(Constants.FG_COLOR);
 		for (int r = 0; r < ROWS; r++) {
 			int y = r * CELL_SIZE;
 
@@ -69,7 +63,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener, MouseI
 
 		if (Constants.GRID) {
 			// draw grid
-			g2d.setColor(GRID_COLOR);
+			g2d.setColor(Constants.GRID_COLOR);
 
 			for (int x = 0; x < BOARD.width; x += CELL_SIZE) {
 				g2d.drawLine(x, 0, x, BOARD.height);

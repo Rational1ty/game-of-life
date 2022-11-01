@@ -1,8 +1,6 @@
 package src;
 
-// import static java.lang.Double.parseDouble;
-// import static java.lang.Integer.parseInt;
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -17,17 +15,24 @@ public final class Constants {
 	public static final boolean WINDOW;
 	public static final Dimension BOARD;
 	public static final int CELL_SIZE;
-	public static final int ROWS;
-	public static final int COLS;
+	public static final char CELL_CHAR;
 	public static final int DELAY;
-	public static final int INITIAL_CONFIG;
 	public static final double BIAS;
 	public static final boolean GRID;
-	public static final char CELL_CHAR;
+	public static final int INITIAL_CONFIG;
+	public static final Color BG_COLOR;
+	public static final Color FG_COLOR;
+	public static final Color GRID_COLOR;
 
 	// internal constants
+	public static final int ROWS;	// calculated based on cell size and board dimensions
+	public static final int COLS;
+	public static final String BG;	// required for compatibility with console
+	public static final String FG;
+
 	public static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
 
+	// underlying properties object
 	private static final Properties props = new Properties(12);
 
 	static {
@@ -64,11 +69,13 @@ public final class Constants {
 		BOARD = getAdjustedBoardDim("board_width", "board_height");
 		
 		CELL_SIZE = parseInt("cell_size");
+		CELL_CHAR = parseChar("cell_char");
+
 		DELAY = parseInt("delay");
 		BIAS = parseDouble("bias");
 		GRID = parseBool("grid");
 
-		INITIAL_CONFIG = switch (get("initial_config")) {
+		INITIAL_CONFIG = switch (props.getProperty("initial_config")) {
 			case "blank"  -> Board.BLANK;
 			case "lined"  -> Board.LINED;
 			case "center" -> Board.CENTER;
@@ -76,29 +83,38 @@ public final class Constants {
 			default -> Board.RANDOM;
 		};
 
-		CELL_CHAR = get("cell_char").charAt(0);
+		BG_COLOR = parseColor("bg_color");
+		FG_COLOR = parseColor("fg_color");
+		GRID_COLOR = parseColor("grid_color");
 
 		// if window is on, calculate rows and cols; otherwise, use clamped board dimensions
 		ROWS = WINDOW ? BOARD.height / CELL_SIZE : Math.min(BOARD.height, 66);
 		COLS = WINDOW ? BOARD.width / CELL_SIZE  : Math.min(BOARD.width, 237);
+
+		BG = props.getProperty("bg_color");
+		FG = props.getProperty("fg_color");
 	}
 
 	private Constants() {}
 
-	public static String get(String key) {
-		return props.getProperty(key);
+	private static boolean parseBool(String key) {
+		return Integer.parseInt(props.getProperty(key)) > 0;
 	}
 
-	private static boolean parseBool(String key) {
-		return Integer.parseInt(get(key)) > 0;
+	private static char parseChar(String key) {
+		return props.getProperty(key).charAt(0);
 	}
 
 	private static int parseInt(String key) {
-		return Integer.parseInt(get(key));
+		return Integer.parseInt(props.getProperty(key));
 	}
 
 	private static double parseDouble(String key) {
-		return Double.parseDouble(get(key));
+		return Double.parseDouble(props.getProperty(key));
+	}
+
+	private static Color parseColor(String key) {
+		return Color.decode(props.getProperty(key));
 	}
 
 	private static Dimension getAdjustedBoardDim(String widthKey, String heightKey) {
